@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="GYM.API/GYM.API.csproj" />
+    <Project Path="GYM.Application/GYM.Application.csproj" />
+    <Project Path="GYM.Domain/GYM.Domain.csproj" />
+    <Project Path="GYM.Infrastructure/GYM.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="GYM.UnitTests/GYM.UnitTests.csproj" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>

@@ -1,0 +1,118 @@
+name: gym-management-system
+
+services:
+
+  gym.api:
+    image: ${DOCKER_REGISTRY-}gymapi
+
+    build:
+      context: GYM.API
+      dockerfile: Dockerfile
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+
+      # HTTP
+      ASPNETCORE_HTTP_PORTS: 8080
+
+      # HTTPS
+      ASPNETCORE_HTTPS_PORTS: 8081
+      ASPNETCORE_HTTPS_PORT: 8081
+
+      # HTTPS certificate
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/gymapi.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${HTTPS_CERTIFICATE_PASSWORD:?HTTPS_CERTIFICATE_PASSWORD is required}
+
+      # PostgreSQL
+      ConnectionStrings__DefaultConnection: >-
+        Host=postgres;
+        Port=5432;
+        Database=${POSTGRES_DB:?POSTGRES_DB is required};
+        Username=${POSTGRES_USER:?POSTGRES_USER is required};
+        Password=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+
+      # Redis
+      ConnectionStrings__Redis: >-
+        redis:6379,
+        password=${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+
+    ports:
+      - "${API_HTTP_PORT:-8080}:8080"
+      - "${API_HTTPS_PORT:-8081}:8081"
+
+    volumes:
+      - "${USERPROFILE}/.aspnet/https:/https:ro"
+
+    depends_on:
+      gym.postgres:
+        condition: service_healthy
+      gym.redis:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+
+  gym.postgres:
+    image: postgres:18.6
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    restart: unless-stopped
+
+
+  gym.redis:
+    image: redis:8.10.1
+
+    command:
+      [
+        "redis-server",
+        "--requirepass",
+        "${REDIS_PASSWORD:?REDIS_PASSWORD is required}"
+      ]
+
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+    volumes:
+      - redis_data:/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "redis-cli ping | grep PONG"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+    restart: unless-stopped
+
+
+volumes:
+  postgres_data:
+  redis_data:
