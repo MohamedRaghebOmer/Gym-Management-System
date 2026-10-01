@@ -14,6 +14,7 @@ permissions:
   checks: write
 
 env:
+  SOLUTION_PATH: '*.sln' # أعد استبدال *.sln باسم ملف الـ Solution إذا كان لديك أكثر من ملف .sln (مثل GYM.sln)
   CONTAINER_APP_CONTAINER_NAME: gym-api
   CONTAINER_APP_NAME: gym-api
   CONTAINER_APP_RESOURCE_GROUP_NAME: GymManagement-RG
@@ -41,10 +42,10 @@ jobs:
           cache-dependency-path: '**/*.csproj'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
 
       - name: Build project
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
 
   # -------------------------------------------------------------
   # 2. Test Stage: Run unit tests and publish results
@@ -65,10 +66,10 @@ jobs:
           cache-dependency-path: '**/*.csproj'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
 
       - name: Run Tests
-        run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test ${{ env.SOLUTION_PATH }} --configuration Release --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx"
 
       - name: Publish Test Results
         uses: dorny/test-reporter@v1
