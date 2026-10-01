@@ -1,10 +1,10 @@
-﻿using GYM.Domain.Abstractions;
+﻿using GYM.Application.Errors;
+using GYM.Domain.Abstractions;
+using GYM.Domain.Errors;
 using GYM.Domain.Primitives;
 using GYM.Domain.Shared;
 using GYM.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
-using GYM.Application.Errors;
-using GYM.Domain.Errors;
 
 namespace GYM.Application.Abstractions;
 

@@ -39,28 +39,6 @@ public class Program
         app.UseRateLimiter();
         app.MapHealthChecks("/health");
 
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild",
-            "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        app.MapGet("/weatherforecast", () => Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                {
-                    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = summaries[Random.Shared.Next(summaries.Length)]
-                })
-            .ToArray());
-
         app.Run();
     }
-}
-
-public record WeatherForecast
-{
-    public DateOnly Date { get; set; }
-    public int TemperatureC { get; set; }
-    public string Summary { get; set; } = string.Empty;
 }

@@ -1,11 +1,9 @@
-﻿using System.Text;
-using System.Threading.RateLimiting;
-using GYM.Infrastructure.Persistence;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.ResponseCompression;
+﻿using GYM.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
+using System.Threading.RateLimiting;
 
 namespace GYM.API.Configurations;
 
@@ -78,7 +76,7 @@ public static class ServicesConfigurations
     }
 
     public static IServiceCollection ConfigureRedis(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         WebApplicationBuilder builder)
     {
         builder.Services.AddStackExchangeRedisCache(options =>
@@ -125,7 +123,7 @@ public static class ServicesConfigurations
     }
 
     public static IServiceCollection ConfigureAuthentication(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         WebApplicationBuilder builder)
     {
         builder.Services.AddAuthentication("Bearer")

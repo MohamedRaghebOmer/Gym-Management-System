@@ -1,6 +1,6 @@
-﻿using System.Data.Common;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Data.Common;
 using System.Diagnostics;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace GYM.Infrastructure.Persistence;
 
