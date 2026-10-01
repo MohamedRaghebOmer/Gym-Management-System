@@ -1,6 +1,6 @@
 @GYM.API_HostAddress = https://localhost:8081
 
-GET {{GYM.API_HostAddress}}/weatherforecast/
+GET {{GYM.API_HostAddress}}/health
 Accept: application/json
 
 ###

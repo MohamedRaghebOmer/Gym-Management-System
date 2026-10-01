@@ -12,6 +12,10 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
 
+      Jwt__Key: ${JWT_KEY?JWT_KEY is required}
+      Jwt__Issuer: ${JWT_ISSUER?JWT_ISSUER is required}
+      Jwt__Audience: ${JWT_AUDIENCE?JWT_AUDIENCE is required}
+
       # HTTP
       ASPNETCORE_HTTP_PORTS: 8080
 
