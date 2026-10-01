@@ -20,7 +20,7 @@ env:
   CONTAINER_REGISTRY_LOGIN_SERVER: gymapi20261001030818.azurecr.io
   DOCKER_FILE_PATH: GYM.API/Dockerfile
   PROJECT_NAME_FOR_DOCKER: gymapi
-  DOTNET_VERSION: "8.0.x"
+  DOTNET_VERSION: '8.0.x'
 
 jobs:
   # -------------------------------------------------------------
@@ -37,7 +37,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-          cache: "true"
+          cache: 'true'
+          cache-dependency-path: '**/*.csproj'
 
       - name: Restore dependencies
         run: dotnet restore
@@ -60,7 +61,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-          cache: "true"
+          cache: 'true'
+          cache-dependency-path: '**/*.csproj'
 
       - name: Restore dependencies
         run: dotnet restore
@@ -73,7 +75,7 @@ jobs:
         if: always()
         with:
           name: .NET Unit Tests
-          path: "**/test-results.trx"
+          path: '**/test-results.trx'
           reporter: dotnet-trx
 
   # -------------------------------------------------------------
