@@ -35,7 +35,10 @@ jobs:
 
       - name: Detect Solution or Project File
         run: |
-          TARGET=$(find . -maxdepth 2 -name "*.sln" | head -n 1)
+          TARGET=$(find . -maxdepth 2 -name "*.slnx" | head -n 1)
+          if [ -z "$TARGET" ]; then
+            TARGET=$(find . -maxdepth 2 -name "*.sln" | head -n 1)
+          fi
           if [ -z "$TARGET" ]; then
             TARGET=$(find . -maxdepth 2 -name "*.csproj" | head -n 1)
           fi
@@ -68,7 +71,10 @@ jobs:
 
       - name: Detect Solution or Project File
         run: |
-          TARGET=$(find . -maxdepth 2 -name "*.sln" | head -n 1)
+          TARGET=$(find . -maxdepth 2 -name "*.slnx" | head -n 1)
+          if [ -z "$TARGET" ]; then
+            TARGET=$(find . -maxdepth 2 -name "*.sln" | head -n 1)
+          fi
           if [ -z "$TARGET" ]; then
             TARGET=$(find . -maxdepth 2 -name "*.csproj" | head -n 1)
           fi
