@@ -6,6 +6,7 @@
     <Project Path="GYM.Infrastructure/GYM.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="GYM.IntegrationTests/GYM.IntegrationTests.csproj" Id="356515d0-3b9e-4db7-a6ab-b246584cc2e5" />
     <Project Path="GYM.UnitTests/GYM.UnitTests.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">

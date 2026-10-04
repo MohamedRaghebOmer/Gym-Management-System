@@ -1,44 +1,27 @@
-using GYM.API.Configurations;
-using GYM.Application;
-using GYM.Infrastructure;
+using GYM.API.Extensions;
 
 namespace GYM.API;
 
-public class Program
+public partial class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddAuthorization();
-        builder.Services.AddProblemDetails();
-        builder.Services.AddHealthChecks();
-        builder.Services
-            .AddInfrastructure()
-            .AddApplication()
-            .ConfigureDatabase(builder)
-            .ConfigureRedis(builder)
-            .ConfigureSerilog(builder.Configuration)
-            .ConfigureCors(builder)
-            .ConfigureAuthentication(builder)
-            .ConfigureRateLimitting(builder)
-            .ConfigureResponseCompression()
-            .ConfigureOpenApi(builder);
+        builder.ConfigureSerilog();
+
+        builder.Services.AddApiServices(builder.Configuration);
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
+        await app.ApplyDatabaseMigrationsAsync();
 
-        app.UseHttpsRedirection();
-        app.UseCors("GymClient");
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseRateLimiter();
+        app.UseApiPipeline();
+
+        app.MapApiEndpoints();
+
         app.MapHealthChecks("/health");
 
-        app.Run();
+        await app.RunAsync();
     }
 }

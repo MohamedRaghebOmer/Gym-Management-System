@@ -11,9 +11,13 @@
 
   <ItemGroup>
     <Compile Remove="GYM MS\**" />
+    <Compile Remove="Logs\**" />
     <Content Remove="GYM MS\**" />
+    <Content Remove="Logs\**" />
     <EmbeddedResource Remove="GYM MS\**" />
+    <EmbeddedResource Remove="Logs\**" />
     <None Remove="GYM MS\**" />
+    <None Remove="Logs\**" />
   </ItemGroup>
 
   <ItemGroup>
