@@ -15,10 +15,10 @@ public abstract class BaseEntityConfiguration<TEntity>
         ConfigureProperties(builder);
     }
 
-    private static void ConfigureTable(EntityTypeBuilder<TEntity> builder) =>
+    protected static void ConfigureTable(EntityTypeBuilder<TEntity> builder) =>
         builder.ToTable(string.Concat(typeof(TEntity).Name, 's'));
 
-    private static void ConfigureKey(EntityTypeBuilder<TEntity> builder) =>
+    protected static void ConfigureKey(EntityTypeBuilder<TEntity> builder) =>
         builder.ConfigurePrimaryKey();
 
     protected abstract void ConfigureProperties(EntityTypeBuilder<TEntity> builder);

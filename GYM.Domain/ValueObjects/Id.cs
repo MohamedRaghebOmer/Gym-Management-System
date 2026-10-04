@@ -23,7 +23,16 @@ public sealed record Id : ValueObject
         return new Id(value);
     }
 
-
+    /// <summary>
+    /// Creates an Id object from a database value without validation.
+    /// This method must be only used when retrieving the value from the database, as it bypasses the validation logic.
+    /// </summary>
+    /// <param name="value">
+    /// The value to create the object from.
+    /// </param>
+    /// <returns>
+    /// The created object.
+    /// </returns>
     public static Id FromDatabase(int value)
         => new Id(value);
 }

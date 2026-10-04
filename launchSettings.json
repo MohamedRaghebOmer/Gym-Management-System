@@ -3,6 +3,7 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "serviceName": "gym.api",
       "serviceActions": {
         "gym.api": "StartDebugging"
       }
