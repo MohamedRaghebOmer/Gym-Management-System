@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GYM.Application.Services;
 
-public sealed class PersonService
+internal sealed class PersonService
     : ServiceBase<Person, PersonResponseDto, CreatePersonDto, UpdatePersonDto>,
         IPersonService
 {
@@ -34,51 +34,81 @@ public sealed class PersonService
         CreatePersonDto dto,
         CancellationToken cancellationToken = default)
     {
-        List<Error> errors = [];
-
-        var gymIdResult = Id.Create(dto.GymId);
-        if (gymIdResult.IsFailure)
-            errors.Add(gymIdResult.Error);
-
-        var phoneResult = Phone.Create(dto.Phone);
-        if (phoneResult.IsFailure)
-            errors.Add(phoneResult.Error);
-
-        Result<Email>? emailResult = null;
-        if (dto.Email is not null)
+        try
         {
-            emailResult = Email.Create(dto.Email);
-            if (emailResult.IsFailure)
-                errors.Add(emailResult.Error);
-        }
+            List<Error> errors = [];
 
-        Result<DateOfBirth>? dateOfBirthResult = null;
-        if (dto.DateOfBirth is not null)
+            var gymIdResult = Id.Create(dto.GymId);
+            if (gymIdResult.IsFailure)
+            {
+                _logger.LogWarning("Failed to create Person: Invalid GymId {dto.GymId}", dto.GymId);
+                errors.Add(gymIdResult.Error);
+            }
+
+            var phoneResult = Phone.Create(dto.Phone);
+            if (phoneResult.IsFailure)
+            {
+                _logger.LogWarning("Failed to create Person: Invalid Phone {dto.Phone}", dto.Phone);
+                errors.Add(phoneResult.Error);
+            }
+
+            Result<Email>? emailResult = null;
+            if (dto.Email is not null)
+            {
+                emailResult = Email.Create(dto.Email);
+                if (emailResult.IsFailure)
+                {
+                    _logger.LogWarning("Failed to create Person: Invalid Email {dto.Email}", dto.Email);
+                    errors.Add(emailResult.Error);
+                }
+            }
+
+            Result<DateOfBirth>? dateOfBirthResult = null;
+            if (dto.DateOfBirth is not null)
+            {
+                dateOfBirthResult = DateOfBirth.Create(dto.DateOfBirth.Value);
+                if (dateOfBirthResult.IsFailure)
+                {
+                    _logger.LogWarning("Failed to create Person: Invalid Date of Birth {dto.DateOfBirth}", dto.DateOfBirth);
+                    errors.Add(dateOfBirthResult.Error);
+                }
+            }
+
+            var personResult = Person.Create(
+                gymIdResult.Value,
+                dto.FullName,
+                phoneResult.Value,
+                emailResult?.Value,
+                dateOfBirthResult?.Value,
+                dto.Gender,
+                dto.Address);
+
+            if (personResult.IsFailure)
+            {
+                _logger.LogWarning("Failed to create Person: Invalid Person data");
+                errors.Add(personResult.Error);
+            }
+
+            if (errors.Count > 0)
+            {
+                _logger.LogWarning("Failed to create Person: Validation errors occurred {Errors}",
+                    string.Join(", ", errors.Select(e => e.Message)));
+                return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
+            }
+
+            _repo.Add(personResult.Value);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return Result.Success(personResult.Value.Id.Value);
+
+        }
+        catch (Exception e)
         {
-            dateOfBirthResult = DateOfBirth.Create(dto.DateOfBirth.Value);
-            if (dateOfBirthResult.IsFailure)
-                errors.Add(dateOfBirthResult.Error);
+            Console.WriteLine(e);
+            _logger.LogError(e, "An error occurred while creating a Person");
+
+            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
         }
-
-        var personResult = Person.Create(
-            gymIdResult.Value,
-            dto.FullName,
-            phoneResult.Value,
-            emailResult?.Value,
-            dateOfBirthResult?.Value,
-            dto.Gender,
-            dto.Address);
-
-        if (personResult.IsFailure)
-            errors.Add(personResult.Error);
-
-        if (errors.Count > 0)
-            return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
-
-        _repo.Add(personResult.Value);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Result.Success(personResult.Value.Id.Value);
     }
 
     public override async Task<Result> UpdateAsync(
@@ -86,57 +116,67 @@ public sealed class PersonService
         UpdatePersonDto dto,
         CancellationToken cancellationToken = default)
     {
-        List<Error> errors = [];
-
-        var idResult = Id.Create(personId);
-        if (idResult.IsFailure)
-            errors.Add(idResult.Error);
-
-        var phoneResult = Phone.Create(dto.Phone);
-        if (phoneResult.IsFailure)
-            errors.Add(phoneResult.Error);
-
-        Result<Email>? emailResult = null;
-        if (dto.Email is not null)
+        try
         {
-            emailResult = Email.Create(dto.Email);
-            if (emailResult.IsFailure)
-                errors.Add(emailResult.Error);
-        }
+            List<Error> errors = [];
 
-        Result<DateOfBirth>? dateOfBirthResult = null;
-        if (dto.DateOfBirth is not null)
+            var idResult = Id.Create(personId);
+            if (idResult.IsFailure)
+                errors.Add(idResult.Error);
+
+            var phoneResult = Phone.Create(dto.Phone);
+            if (phoneResult.IsFailure)
+                errors.Add(phoneResult.Error);
+
+            Result<Email>? emailResult = null;
+            if (dto.Email is not null)
+            {
+                emailResult = Email.Create(dto.Email);
+                if (emailResult.IsFailure)
+                    errors.Add(emailResult.Error);
+            }
+
+            Result<DateOfBirth>? dateOfBirthResult = null;
+            if (dto.DateOfBirth is not null)
+            {
+                dateOfBirthResult = DateOfBirth.Create(dto.DateOfBirth.Value);
+                if (dateOfBirthResult.IsFailure)
+                    errors.Add(dateOfBirthResult.Error);
+            }
+
+            var person = await _repo.GetByIdAsync(
+                idResult.Value,
+                cancellationToken);
+            if (person is null)
+            {
+                return Result.Failure<int>(
+                    ServiceErrors.Common.NotFound);
+            }
+
+            var personResult = person.Update(
+                dto.FullName,
+                phoneResult.Value,
+                emailResult?.Value,
+                dateOfBirthResult?.Value,
+                dto.Gender,
+                dto.Address);
+            if (personResult.IsFailure)
+                errors.Add(personResult.Error);
+
+            if (errors.Count > 0)
+                return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return Result.Success();
+
+        }
+        catch (Exception e)
         {
-            dateOfBirthResult = DateOfBirth.Create(dto.DateOfBirth.Value);
-            if (dateOfBirthResult.IsFailure)
-                errors.Add(dateOfBirthResult.Error);
+            Console.WriteLine(e);
+            _logger.LogError(e, "An error occurred while updating a Person");
+
+            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
         }
-
-        var person = await _repo.GetByIdAsync(
-            idResult.Value,
-            cancellationToken);
-        if (person is null)
-        {
-            return Result.Failure<int>(
-                ServiceErrors.Common.NotFound);
-        }
-
-        var personResult = person.Update(
-            dto.FullName,
-            phoneResult.Value,
-            emailResult?.Value,
-            dateOfBirthResult?.Value,
-            dto.Gender,
-            dto.Address);
-        if (personResult.IsFailure)
-            errors.Add(personResult.Error);
-
-        if (errors.Count > 0)
-            return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Result.Success();
-
     }
 }

@@ -5,7 +5,7 @@ using GYM.Infrastructure.Persistence;
 
 namespace GYM.Infrastructure.Repositories;
 
-public sealed class PersonRepository : Repository<Person>, IPersonRepository
+internal sealed class PersonRepository : Repository<Person>, IPersonRepository
 {
     private readonly GymDbContext _dbContext;
 
