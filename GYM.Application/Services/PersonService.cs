@@ -4,6 +4,7 @@ using GYM.Application.DTOs.Person;
 using GYM.Application.Errors;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
+using GYM.Domain.Errors;
 using GYM.Domain.Repositories;
 using GYM.Domain.Shared;
 using GYM.Domain.ValueObjects;
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GYM.Application.Services;
 
-internal sealed class PersonService
+public sealed class PersonService
     : ServiceBase<Person, PersonResponseDto, CreatePersonDto, UpdatePersonDto>,
         IPersonService
 {
@@ -74,6 +75,22 @@ internal sealed class PersonService
                 }
             }
 
+            var validateResult = Person.Validate(dto.FullName, dto.Address);
+            if (validateResult.IsFailure)
+            {
+                if (validateResult.Error is ValidationErrors validationErrors)
+                    errors.AddRange(validationErrors.Errors);
+                else
+                    errors.Add(validateResult.Error);
+            }
+
+            if (errors.Count > 0)
+            {
+                _logger.LogWarning("Failed to create Person: Validation errors occurred {Errors}",
+                    string.Join(", ", errors.Select(e => e.Message)));
+                return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
+            }
+
             var personResult = Person.Create(
                 gymIdResult.Value,
                 dto.FullName,
@@ -86,14 +103,7 @@ internal sealed class PersonService
             if (personResult.IsFailure)
             {
                 _logger.LogWarning("Failed to create Person: Invalid Person data");
-                errors.Add(personResult.Error);
-            }
-
-            if (errors.Count > 0)
-            {
-                _logger.LogWarning("Failed to create Person: Validation errors occurred {Errors}",
-                    string.Join(", ", errors.Select(e => e.Message)));
-                return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
+                return Result.Failure<int>(new ValidationErrors([personResult.Error]));
             }
 
             _repo.Add(personResult.Value);
@@ -142,6 +152,21 @@ internal sealed class PersonService
                 dateOfBirthResult = DateOfBirth.Create(dto.DateOfBirth.Value);
                 if (dateOfBirthResult.IsFailure)
                     errors.Add(dateOfBirthResult.Error);
+            }
+
+            var validateResult = Person.Validate(dto.FullName, dto.Address);
+            if (validateResult.IsFailure)
+            {
+                if (validateResult.Error is ValidationErrors validationErrors)
+                    errors.AddRange(validationErrors.Errors);
+                else
+                    errors.Add(validateResult.Error);
+            }
+
+            if (errors.Count > 0)
+            {
+                _logger.LogWarning("Failed to update Person: Invalid Person data {errors}", string.Join(", ", errors.Select(e => e.Message)));
+                return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
             }
 
             var person = await _repo.GetByIdAsync(

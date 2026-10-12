@@ -17,7 +17,7 @@ public interface IService<TEntity, TResponseDto, in TCreateDto, in TUpdateDto>
         int id,
         CancellationToken cancellationToken = default);
 
-    Task<List<TResponseDto>> GetAllAsync(
+    Task<Result<List<TResponseDto>>> GetAllAsync(
         CancellationToken cancellationToken = default);
 
     Task<Result<bool>> ExistsAsync(

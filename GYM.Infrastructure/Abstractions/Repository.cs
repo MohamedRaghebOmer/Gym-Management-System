@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GYM.Infrastructure.Abstractions;
 
-internal abstract class Repository<TEntity>(GymDbContext _dbContext)
+internal class Repository<TEntity>(GymDbContext _dbContext)
     : IRepository<TEntity>
     where TEntity : Entity
 {

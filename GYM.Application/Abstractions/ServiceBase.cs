@@ -33,95 +33,141 @@ public abstract class ServiceBase<TEntity, TResponseDto, TCreateDto, TUpdateDto>
         int id,
         CancellationToken cancellationToken = default)
     {
-        var idResult = Id.Create(id);
-
-        if (idResult.IsFailure)
+        try
         {
-            _logger.LogWarning(
-                "Attempted to retrieve an entity of type {EntityType} with an invalid ID. {Id} {Error}",
+            var idResult = Id.Create(id);
+
+            if (idResult.IsFailure)
+            {
+                _logger.LogWarning(
+                    "Attempted to retrieve an entity of type {EntityType} with an invalid ID. {Id} {Error}",
+                    typeof(TEntity).Name,
+                    id,
+                    idResult.Error);
+
+                return Result.Failure<TResponseDto>(idResult.Error);
+            }
+
+            var entity = await _repo.GetByIdAsync(
+                idResult.Value,
+                cancellationToken);
+
+            if (entity is null)
+            {
+                return Result.Failure<TResponseDto>(
+                    ServiceErrors.Common.NotFound);
+            }
+
+            return TResponseDto.FromEntity(entity);
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "An unexpected error occurred while retrieving an entity of type {EntityType} with ID {Id}.",
                 typeof(TEntity).Name,
-                id,
-                idResult.Error);
+                id);
 
-            return Result.Failure<TResponseDto>(idResult.Error);
-        }
-
-        var entity = await _repo.GetByIdAsync(
-            idResult.Value,
-            cancellationToken);
-
-        if (entity is null)
-        {
             return Result.Failure<TResponseDto>(
-                ServiceErrors.Common.NotFound);
+                ServiceErrors.Common.UnExcepected);
         }
-
-        return TResponseDto.FromEntity(entity);
     }
 
-    public async Task<List<TResponseDto>> GetAllAsync(
+    public async Task<Result<List<TResponseDto>>> GetAllAsync(
         CancellationToken cancellationToken = default)
     {
-        var entities = await _repo.GetAllAsync(cancellationToken);
+        try
+        {
+            var entities = await _repo.GetAllAsync(cancellationToken);
 
-        return entities
-            .Select(TResponseDto.FromEntity)
-            .ToList();
+            return entities
+                .Select(TResponseDto.FromEntity)
+                .ToList();
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "An unexpected error occurred while retrieving all entities of type {EntityType}.",
+                typeof(TEntity).Name);
+
+            return Result.Failure<List<TResponseDto>>(ServiceErrors.Common.UnExcepected);
+        }
     }
 
     public async Task<Result<bool>> ExistsAsync(
         int id,
         CancellationToken cancellationToken = default)
     {
-        var idResult = Id.Create(id);
-
-        if (idResult.IsFailure)
+        try
         {
-            _logger.LogWarning(
-                "Attempted to check the existence of entity of type {EntityType} with invalid ID. {Id} {Error}",
-                typeof(TEntity).Name,
-                id,
-                idResult.Error);
+            var idResult = Id.Create(id);
 
-            return Result.Failure<bool>(idResult.Error);
+            if (idResult.IsFailure)
+            {
+                _logger.LogWarning(
+                    "Attempted to check the existence of entity of type {EntityType} with invalid ID. {Id} {Error}",
+                    typeof(TEntity).Name,
+                    id,
+                    idResult.Error);
+
+                return Result.Failure<bool>(idResult.Error);
+            }
+
+            return await _repo.ExistsAsync(
+                idResult.Value,
+                cancellationToken);
         }
-
-        return await _repo.ExistsAsync(
-            idResult.Value,
-            cancellationToken);
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(e, "An unexpected error occurred while checking the existence of an entity of type {EntityType} with ID {Id}.", typeof(TEntity).Name, id);
+            
+            return Result.Failure<bool>(ServiceErrors.Common.UnExcepected);
+        }
     }
 
     public async Task<Result> DeleteAsync(
         int id,
         CancellationToken cancellationToken = default)
     {
-        var idResult = Id.Create(id);
-
-        if (idResult.IsFailure)
+        try
         {
-            _logger.LogWarning(
-                "Attempted to delete an entity of type {EntityType} with invalid ID. {Id} {Error}",
-                typeof(TEntity).Name,
-                id,
-                idResult.Error);
+            var idResult = Id.Create(id);
 
-            return Result.Failure(
-                DomainErrors.ValueObjects.Id.LessThanOrEqualToZero);
+            if (idResult.IsFailure)
+            {
+                _logger.LogWarning(
+                    "Attempted to delete an entity of type {EntityType} with invalid ID. {Id} {Error}",
+                    typeof(TEntity).Name,
+                    id,
+                    idResult.Error);
+
+                return Result.Failure(
+                    DomainErrors.ValueObjects.Id.LessThanOrEqualToZero);
+            }
+
+            var isDeleted = await _repo.RemoveAsync(
+                idResult.Value,
+                cancellationToken);
+
+            if (!isDeleted)
+            {
+                return Result.Failure<bool>(
+                    ServiceErrors.Common.NotFound);
+            }
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return Result.Success();
         }
-
-        var isDeleted = await _repo.RemoveAsync(
-            idResult.Value,
-            cancellationToken);
-
-        if (!isDeleted)
+        catch (Exception e)
         {
-            return Result.Failure<bool>(
-                ServiceErrors.Common.NotFound);
+            Console.WriteLine(e);
+            _logger.LogError(e, "An unexpected error occurred while deleting an entity of type {EntityType} with ID {Id}.", typeof(TEntity).Name, id);
+            
+            return Result.Failure<bool>(ServiceErrors.Common.UnExcepected);
         }
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Result.Success();
     }
 
     public abstract Task<Result<int>> CreateAsync(

@@ -2,7 +2,7 @@
 
 namespace GYM.Application.Errors;
 
-internal static class ServiceErrors
+public static class ServiceErrors
 {
     public static class Common
     {

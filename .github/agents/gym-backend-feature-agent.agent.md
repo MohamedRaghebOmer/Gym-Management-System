@@ -96,12 +96,7 @@ Only leave a class unsealed when there is a concrete reason that another type is
 
 Abstract classes are, of course, not sealed when the architecture explicitly requires them to be abstract.
 
-## 3. Internal by default
-
-Every class you create must be 'internal' level access-modifier by default.
-Only make the class `public` when there is a need to use the class form outside the assembly/project
-
-## 4. Follow existing naming/style
+## 3. Follow existing naming/style
 
 Match the project's:
 
