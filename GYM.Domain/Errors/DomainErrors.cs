@@ -83,5 +83,30 @@ public static class DomainErrors
                     $"Address cannot be longer than {Domain.Entities.Person.Constants.AddressMaxLength} characters.");
             }
         }
+
+        public static class Role
+        {
+            public static class Name
+            {
+                public static readonly Error Empty = new(
+                    "Role.Name.Empty",
+                    "Role name cannot be empty.");
+
+                public static readonly Error TooShort = new(
+                    "Role.Name.TooShort",
+                    $"Role name must be at least {Domain.Entities.Role.Constants.NameMinLength} characters long.");
+
+                public static readonly Error TooLong = new(
+                    "Role.Name.TooLong",
+                    $"Role name cannot be longer than {Domain.Entities.Role.Constants.NameMaxLength} characters.");
+            }
+
+            public static class Description
+            {
+                public static readonly Error TooLong = new(
+                    "Role.Description.TooLong",
+                    $"Role description cannot be longer than {Domain.Entities.Role.Constants.DescriptionMaxLength} characters.");
+            }
+        }
     }
 }

@@ -10,8 +10,6 @@ using GYM.Domain.Shared;
 using GYM.Domain.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace GYM.UnitTests.ApplicationTests.ServicesTests;
 
