@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GYM.Infrastructure.Abstractions;
 
-public abstract class BaseEntityConfiguration<TEntity>
+internal abstract class BaseEntityConfiguration<TEntity>
     where TEntity : Entity
 {
     protected void Configure(EntityTypeBuilder<TEntity> builder)

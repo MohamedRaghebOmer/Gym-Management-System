@@ -28,7 +28,7 @@ public sealed class Person : Entity
         Email? email,
         DateOfBirth? dateOfBirth,
         Gender gender,
-        string? address)
+        string? address) 
     {
         GymId = gymId;
         FullName = fullName;
@@ -98,7 +98,7 @@ public sealed class Person : Entity
         return Result.Success();
     }
 
-    private static Result Validate(
+    public static Result Validate(
         string fullName,
         string? address)
     {

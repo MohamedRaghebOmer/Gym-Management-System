@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GYM.Infrastructure.Extensions;
 
-public static class PrimaryKeyExtension
+internal static class PrimaryKeyExtension
 {
     public static EntityTypeBuilder<TEntity> ConfigurePrimaryKey<TEntity>(
         this EntityTypeBuilder<TEntity> builder)

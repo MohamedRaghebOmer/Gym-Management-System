@@ -7,8 +7,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GYM.Infrastructure.EntityConfigurations;
 
-public sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
+internal sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
 {
+    /// <summary>
+    /// TableName is written like that likely specialy in PersonConfiguration class because the domain model name is completly different from the table name in the database. The domain model is called Person, but the table name is People. This is a common practice in software development to have different names for domain models and database tables to better reflect their purpose and context.
+    /// But if the domain model name will be only different from the table name in only 's' letter, then use BaseEntityConfiguration class to configure the table name automatically. But if the domain model name is completly different from the table name, then use this approach to configure the table name manually.
+    /// </summary>
     private const string TableName = "People";
 
     public void Configure(EntityTypeBuilder<Person> builder)
