@@ -8,6 +8,7 @@ public sealed class GymDbContext(
     : DbContext(options)
 {
     public DbSet<Person> People => Set<Person>();
+    public DbSet<Role> Roles => Set<Role>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

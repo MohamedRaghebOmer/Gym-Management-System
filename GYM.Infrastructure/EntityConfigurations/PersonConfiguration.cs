@@ -97,12 +97,12 @@ internal sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
             // Check constraint for FullName length
             table.HasCheckConstraint(
                 $"CK_{TableName}_{nameof(Person.FullName)}",
-                $"length({nameof(Person.FullName)}) >= {Person.Constants.FullNameMinLength} AND length({nameof(Person.FullName)}) <= {Person.Constants.FullNameMaxLength}");
+                $"length(\"{nameof(Person.FullName)}\") >= {Person.Constants.FullNameMinLength} AND length(\"{nameof(Person.FullName)}\") <= {Person.Constants.FullNameMaxLength}");
 
             // Check constraint for Phone length
             table.HasCheckConstraint(
                 $"CK_{TableName}_{nameof(Person.Phone)}",
-                $"length({nameof(Person.Phone)}) >= {Person.Constants.PhoneMinLength} AND length({nameof(Person.Phone)}) <= {Person.Constants.PhoneMaxLength}");
+                $"length(\"{nameof(Person.Phone)}\") >= {Person.Constants.PhoneMinLength} AND length(\"{nameof(Person.Phone)}\") <= {Person.Constants.PhoneMaxLength}");
 
             // Check the Gender
             var validGenderValues = string.Join(
