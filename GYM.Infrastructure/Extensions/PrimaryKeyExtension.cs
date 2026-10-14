@@ -15,7 +15,7 @@ internal static class PrimaryKeyExtension
             .HasConversion(
                 id => id.Value,
                 value => Id.FromDatabase(value))
-            .UseIdentityAlwaysColumn();
+            .UseIdentityByDefaultColumn();
 
         builder.HasKey(x => x.Id);
 

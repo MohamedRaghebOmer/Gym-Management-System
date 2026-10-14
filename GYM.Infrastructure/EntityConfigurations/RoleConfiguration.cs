@@ -17,6 +17,7 @@ public sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
         ConfigureProperties(builder);
         ConfigureIndexes(builder);
         ConfigureCheckConstraints(builder);
+        SeedData(builder);
     }
 
     private static void ConfigureProperties(EntityTypeBuilder<Role> builder)
@@ -57,5 +58,10 @@ public sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
                 $"CK_{TableName}_{nameof(Role.Description)}",
                 $"\"{nameof(Role.Description)}\" IS NULL OR length(\"{nameof(Role.Description)}\") <= {Role.Constants.DescriptionMaxLength}");
         });
+    }
+
+    private static void SeedData(EntityTypeBuilder<Role> builder)
+    {
+        builder.HasData(Role.SeedData());
     }
 }
