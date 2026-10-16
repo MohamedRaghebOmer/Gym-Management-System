@@ -76,4 +76,15 @@ public sealed class Role : Entity
 
         return Result.Success();
     }
+
+
+    // Seed data for the Role entity
+    public static Role[] SeedData()
+    {
+        return
+        [
+            new Role("Admin", "Administrator role with full access"),
+            new Role("Trainer", "Trainer role with training responsibilities")
+        ];
+    }
 }
