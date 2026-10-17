@@ -5,6 +5,10 @@ namespace GYM.Domain.Primitives;
 public abstract class Entity : IEquatable<Entity>
 {
     protected Entity() { }
+    protected Entity(Id id)
+    {
+        Id = id;
+    }
 
     public Id Id { get; protected set; } = default!;
 

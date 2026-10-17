@@ -40,7 +40,12 @@ public sealed class RoleService :
 
             var roleResult = Role.Create(dto.Name, dto.Description);
             if (roleResult.IsFailure)
-                errors.Add(roleResult.Error);
+            {
+                if (roleResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(roleResult.Error);
+            }
 
             if (errors.Count > 0)
                 return Result.Failure<int>(new ValidationErrors(errors.ToArray()));
@@ -68,7 +73,12 @@ public sealed class RoleService :
 
             var idResult = Id.Create(roleId);
             if (idResult.IsFailure)
-                errors.Add(idResult.Error);
+            {
+                if (idResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(idResult.Error);
+            }
 
             var role = await _repo.GetByIdAsync(idResult.Value, cancellationToken);
             if (role is null)
@@ -76,7 +86,12 @@ public sealed class RoleService :
 
             var roleResult = role.Update(dto.Name, dto.Description);
             if (roleResult.IsFailure)
-                errors.Add(roleResult.Error);
+            {
+                if (roleResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(roleResult.Error);
+            }
 
             if (errors.Count > 0)
                 return Result.Failure(new ValidationErrors(errors.ToArray()));
