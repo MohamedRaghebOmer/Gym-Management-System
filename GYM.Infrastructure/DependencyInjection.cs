@@ -14,9 +14,9 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IPersonRepository, PersonRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<GYM.Application.Abstractions.IPasswordHasher, GYM.Infrastructure.Services.BCryptPasswordHasher>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IGymRepository, GymRepository>();
 
         return services;
     }

@@ -42,14 +42,20 @@ public sealed class PersonService
             if (gymIdResult.IsFailure)
             {
                 _logger.LogWarning("Failed to create Person: Invalid GymId {dto.GymId}", dto.GymId);
-                errors.Add(gymIdResult.Error);
+                if (gymIdResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(gymIdResult.Error);
             }
 
             var phoneResult = Phone.Create(dto.Phone);
             if (phoneResult.IsFailure)
             {
                 _logger.LogWarning("Failed to create Person: Invalid Phone {dto.Phone}", dto.Phone);
-                errors.Add(phoneResult.Error);
+                if (phoneResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(phoneResult.Error);
             }
 
             Result<Email>? emailResult = null;
@@ -59,7 +65,10 @@ public sealed class PersonService
                 if (emailResult.IsFailure)
                 {
                     _logger.LogWarning("Failed to create Person: Invalid Email {dto.Email}", dto.Email);
-                    errors.Add(emailResult.Error);
+                    if (emailResult.Error is ValidationErrors ve)
+                        errors.AddRange(ve.Errors);
+                    else
+                        errors.Add(emailResult.Error);
                 }
             }
 
@@ -70,7 +79,10 @@ public sealed class PersonService
                 if (dateOfBirthResult.IsFailure)
                 {
                     _logger.LogWarning("Failed to create Person: Invalid Date of Birth {dto.DateOfBirth}", dto.DateOfBirth);
-                    errors.Add(dateOfBirthResult.Error);
+                    if (dateOfBirthResult.Error is ValidationErrors ve)
+                        errors.AddRange(ve.Errors);
+                    else
+                        errors.Add(dateOfBirthResult.Error);
                 }
             }
 
@@ -102,7 +114,9 @@ public sealed class PersonService
             if (personResult.IsFailure)
             {
                 _logger.LogWarning("Failed to create Person: Invalid Person data");
-                return Result.Failure<int>(new ValidationErrors([personResult.Error]));
+                if (personResult.Error is ValidationErrors ve)
+                    return Result.Failure<int>(new ValidationErrors(ve.Errors));
+                return Result.Failure<int>(new ValidationErrors(new[] { personResult.Error }));
             }
 
             _repo.Add(personResult.Value);
@@ -131,18 +145,33 @@ public sealed class PersonService
 
             var idResult = Id.Create(personId);
             if (idResult.IsFailure)
-                errors.Add(idResult.Error);
+            {
+                if (idResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(idResult.Error);
+            }
 
             var phoneResult = Phone.Create(dto.Phone);
             if (phoneResult.IsFailure)
-                errors.Add(phoneResult.Error);
+            {
+                if (phoneResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(phoneResult.Error);
+            }
 
             Result<Email>? emailResult = null;
             if (dto.Email is not null)
             {
                 emailResult = Email.Create(dto.Email);
                 if (emailResult.IsFailure)
-                    errors.Add(emailResult.Error);
+                {
+                    if (emailResult.Error is ValidationErrors ve)
+                        errors.AddRange(ve.Errors);
+                    else
+                        errors.Add(emailResult.Error);
+                }
             }
 
             Result<DateOfBirth>? dateOfBirthResult = null;
@@ -150,7 +179,12 @@ public sealed class PersonService
             {
                 dateOfBirthResult = DateOfBirth.Create(dto.DateOfBirth.Value);
                 if (dateOfBirthResult.IsFailure)
-                    errors.Add(dateOfBirthResult.Error);
+                {
+                    if (dateOfBirthResult.Error is ValidationErrors ve)
+                        errors.AddRange(ve.Errors);
+                    else
+                        errors.Add(dateOfBirthResult.Error);
+                }
             }
 
             var validateResult = Person.Validate(dto.FullName, dto.Address);
@@ -185,7 +219,12 @@ public sealed class PersonService
                 dto.Gender,
                 dto.Address);
             if (personResult.IsFailure)
-                errors.Add(personResult.Error);
+            {
+                if (personResult.Error is ValidationErrors ve)
+                    errors.AddRange(ve.Errors);
+                else
+                    errors.Add(personResult.Error);
+            }
 
             if (errors.Count > 0)
                 return Result.Failure<int>(new ValidationErrors(errors.ToArray()));

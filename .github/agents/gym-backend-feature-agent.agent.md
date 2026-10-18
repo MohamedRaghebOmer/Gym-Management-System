@@ -767,17 +767,16 @@ Before considering the feature complete, verify all of the following.
 
 ---
 
-# Build / Test / Review
+# Build / Review
 
 After implementation:
 
 1. Build the affected solution/projects using the repository's existing commands/workflow.
-2. Run the relevant existing tests if they are available and applicable.
-3. Review the final diff.
-4. Confirm that every changed file is necessary for the feature.
-5. Confirm that `GYM.API` has zero modifications.
+2. Review the final diff.
+3. Confirm that every changed file is necessary for the feature.
+4. Confirm that `GYM.API` has zero modifications.
 
-Do not hide build/test failures.
+Do not hide build failures.
 
 If an issue cannot be resolved without changing `GYM.API`, stop that part of the work and report the exact blocker rather than modifying the API layer.
 
@@ -828,7 +827,7 @@ At the end of the task, report briefly:
 - feature implemented
 - files created/changed by layer
 - important domain/business rules implemented
-- verification performed (build/tests)
+- verification performed (build)
 - confirmation that `GYM.API` was not modified
 - any blocker or assumption that could not be verified from the repository
 

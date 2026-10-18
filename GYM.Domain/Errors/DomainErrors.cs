@@ -109,6 +109,25 @@ public static class DomainErrors
             }
         }
 
+        public static class Gym
+        {
+            public static class Name
+            {
+                public static readonly Error Empty = new(
+                    "Gym.Name.Empty",
+                    "Gym name cannot be empty.");
+
+                public static readonly Error TooShort = new(
+                    "Gym.Name.TooShort",
+                    $"Gym name must be at least {Domain.Entities.Gym.Constants.NameMinLength} characters long.");
+
+                public static readonly Error TooLong = new(
+                    "Gym.Name.TooLong",
+                    $"Gym name cannot be longer than {Domain.Entities.Gym.Constants.NameMaxLength} characters.");
+            }
+        }
+
+
         public static class User
         {
             public static class Username
