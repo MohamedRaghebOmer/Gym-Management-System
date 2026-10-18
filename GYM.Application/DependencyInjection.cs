@@ -1,5 +1,4 @@
-﻿using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
+﻿using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +10,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IGymService, GymService>();
 
         return services;

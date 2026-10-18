@@ -4,7 +4,6 @@ using GYM.Application.DTOs.Person;
 using GYM.Application.Errors;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
-using GYM.Domain.Errors;
 using GYM.Domain.Repositories;
 using GYM.Domain.Shared;
 using GYM.Domain.ValueObjects;

@@ -1,11 +1,11 @@
-﻿using GYM.Application.Abstractions;
+﻿using FluentAssertions;
+using GYM.Application.Abstractions;
 using GYM.Application.Errors;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Errors;
 using GYM.Domain.Primitives;
 using GYM.Domain.Shared;
 using GYM.Domain.ValueObjects;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 

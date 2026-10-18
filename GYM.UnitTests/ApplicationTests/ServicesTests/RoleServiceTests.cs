@@ -2,13 +2,12 @@ using FluentAssertions;
 using GYM.Application;
 using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Role;
+using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
 using GYM.Domain.Shared;
 using GYM.Domain.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Xunit;
-using GYM.Domain.Entities;
 
 namespace GYM.UnitTests.ApplicationTests.ServicesTests;
 

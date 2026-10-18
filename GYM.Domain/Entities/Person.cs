@@ -28,7 +28,7 @@ public sealed class Person : Entity
         Email? email,
         DateOfBirth? dateOfBirth,
         Gender gender,
-        string? address) 
+        string? address)
     {
         GymId = gymId;
         FullName = fullName;
