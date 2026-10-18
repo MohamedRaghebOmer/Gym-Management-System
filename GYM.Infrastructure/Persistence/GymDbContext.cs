@@ -9,6 +9,7 @@ public sealed class GymDbContext(
 {
     public DbSet<Person> People => Set<Person>();
     public DbSet<Role> Roles => Set<Role>();
+    public DbSet<Domain.Entities.User> Users => Set<Domain.Entities.User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

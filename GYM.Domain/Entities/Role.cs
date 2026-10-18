@@ -1,6 +1,7 @@
 using GYM.Domain.Errors;
 using GYM.Domain.Primitives;
 using GYM.Domain.Shared;
+using GYM.Domain.ValueObjects;
 
 namespace GYM.Domain.Entities;
 
@@ -11,6 +12,14 @@ public sealed class Role : Entity
         public const int NameMinLength = 2;
         public const int NameMaxLength = 50;
         public const int DescriptionMaxLength = 250;
+    }
+
+    private Role(Id id, string name, string? description)
+        : base(id)
+    {
+        Name = name;
+        Description = description;
+        CreatedAt = DateTime.UtcNow;
     }
 
     private Role(string name, string? description)
@@ -26,6 +35,8 @@ public sealed class Role : Entity
     public string? Description { get; private set; }
     public DateTime CreatedAt { get; private init; }
     public DateTime? UpdatedAt { get; private set; }
+
+    public ICollection<Domain.Entities.User> Users { get; } = [];
 
     public static Result<Role> Create(string name, string? description)
     {
@@ -83,8 +94,15 @@ public sealed class Role : Entity
     {
         return
         [
-            new Role("Admin", "Administrator role with full access"),
-            new Role("Trainer", "Trainer role with training responsibilities")
+            new Role(
+                Id.FromDatabase(1),
+                "Admin",
+                "Administrator role with full access"),
+
+            new Role(
+                Id.FromDatabase(2),
+                "Trainer",
+            "Trainer role with training responsibilities")
         ];
     }
 }

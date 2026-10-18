@@ -1,7 +1,6 @@
 using FluentAssertions;
 using GYM.Domain.Entities;
 using GYM.Domain.Shared;
-using Xunit;
 
 namespace GYM.UnitTests.DomainTests.EntitiesTests;
 

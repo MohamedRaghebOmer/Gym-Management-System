@@ -108,5 +108,34 @@ public static class DomainErrors
                     $"Role description cannot be longer than {Domain.Entities.Role.Constants.DescriptionMaxLength} characters.");
             }
         }
+
+        public static class User
+        {
+            public static class Username
+            {
+                public static readonly Error Empty = new(
+                    "User.Username.Empty",
+                    "Username cannot be empty.");
+
+                public static readonly Error TooShort = new(
+                    "User.Username.TooShort",
+                    $"Username must be at least {Domain.Entities.User.Constants.UsernameMinLength} characters long.");
+
+                public static readonly Error TooLong = new(
+                    "User.Username.TooLong",
+                    $"Username cannot be longer than {Domain.Entities.User.Constants.UsernameMaxLength} characters.");
+            }
+
+            public static class Password
+            {
+                public static readonly Error Empty = new(
+                    "User.Password.Empty",
+                    "Password cannot be empty.");
+
+                public static readonly Error TooLong = new(
+                    "User.Password.TooLong",
+                    $"Password cannot be longer than {Domain.Entities.User.Constants.PasswordHashMaxLength} characters.");
+            }
+        }
     }
 }

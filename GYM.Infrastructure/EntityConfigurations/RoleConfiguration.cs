@@ -53,7 +53,7 @@ public sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
             table.HasCheckConstraint(
                 $"CK_{TableName}_{nameof(Role.Name)}",
                 $"length(\"{nameof(Role.Name)}\") >= {Role.Constants.NameMinLength} AND length(\"{nameof(Role.Name)}\") <= {Role.Constants.NameMaxLength}");
-            
+
             table.HasCheckConstraint(
                 $"CK_{TableName}_{nameof(Role.Description)}",
                 $"\"{nameof(Role.Description)}\" IS NULL OR length(\"{nameof(Role.Description)}\") <= {Role.Constants.DescriptionMaxLength}");
