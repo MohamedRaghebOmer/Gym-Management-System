@@ -25,6 +25,23 @@ public static class ServiceErrors
         }
     }
 
+    public static class Member
+    {
+        public static class Person
+        {
+            public static readonly Error AlreadyAssociatedWithMember = new(
+                "Member.Person.AlreadyAssociatedWithMember",
+                "The person is already associated with a member.");
+        }
+
+        public static class Trainer
+        {
+            public static readonly Error AlreadyAssociatedWithMember = new(
+                "Member.Trainer.AlreadyAssociatedWithMember",
+                "The trainer is already associated with a member.");
+        }
+    }
+
     public static class User
     {
         public static class Person

@@ -54,6 +54,7 @@ public sealed class Person : Entity
     public DateTime? UpdatedAt { get; private set; }
 
     public Trainer? Trainer { get; private set; }
+    public Member? Member { get; private set; }
 
 
     public static Result<Person> Create(

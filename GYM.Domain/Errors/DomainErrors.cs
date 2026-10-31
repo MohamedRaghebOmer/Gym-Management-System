@@ -155,6 +155,41 @@ public static class DomainErrors
             }
         }
 
+        public static class Member
+        {
+            public static class JoinDate
+            {
+                public static readonly Error Required = new(
+                    "Member.JoinDate.Required",
+                    "Join date is required.");
+
+                public static readonly Error InTheFuture = new(
+                    "Member.JoinDate.InTheFuture",
+                    "Join date cannot be in the future.");
+            }
+
+            public static class EmergencyContactName
+            {
+                public static readonly Error TooLong = new(
+                    "Member.EmergencyContactName.TooLong",
+                    $"Emergency contact name cannot be longer than {Domain.Entities.Member.Constants.EmergencyContactNameMaxLength} characters.");
+            }
+
+            public static class EmergencyContactPhone
+            {
+                public static readonly Error TooLong = new(
+                    "Member.EmergencyContactPhone.TooLong",
+                    $"Emergency contact phone cannot be longer than {Domain.Entities.Member.Constants.EmergencyContactPhoneMaxLength} characters.");
+            }
+
+            public static class Notes
+            {
+                public static readonly Error TooLong = new(
+                    "Member.Notes.TooLong",
+                    $"Notes cannot be longer than {Domain.Entities.Member.Constants.NotesMaxLength} characters.");
+            }
+        }
+
         public static class User
         {
             public static class Username
