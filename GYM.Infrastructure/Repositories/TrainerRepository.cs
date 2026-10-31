@@ -17,14 +17,18 @@ internal sealed class TrainerRepository : Repository<Trainer>, ITrainerRepositor
         _dbContext = dbContext;
     }
 
-    public Task<Trainer?> GetByPersonIdAsync(Id personId, CancellationToken cancellationToken = default)
+    public Task<Trainer?> GetByPersonIdAsync(
+        Id personId, 
+        CancellationToken cancellationToken = default)
     {
         return _dbContext.Set<Trainer>()
             .AsNoTracking()
             .FirstOrDefaultAsync(t => t.PersonId == personId, cancellationToken);
     }
 
-    public Task<bool> ExistsByPersonIdAsync(Id personId, CancellationToken cancellationToken = default)
+    public Task<bool> ExistsByPersonIdAsync(
+        Id personId,
+        CancellationToken cancellationToken = default)
     {
         return _dbContext.Set<Trainer>()
             .AnyAsync(t => t.PersonId == personId, cancellationToken);

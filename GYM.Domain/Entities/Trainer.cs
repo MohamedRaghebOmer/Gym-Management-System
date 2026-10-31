@@ -38,6 +38,7 @@ public sealed class Trainer : Entity
     public DateTime? UpdatedAt { get; private set; }
 
     public Person? Person { get; private set; }
+    public ICollection<Member> Members { get; private set; } = [];
 
     public static Result<Trainer> Create(
         Id personId,
