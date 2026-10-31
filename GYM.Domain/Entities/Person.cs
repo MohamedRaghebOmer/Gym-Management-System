@@ -53,6 +53,8 @@ public sealed class Person : Entity
     public DateTime CreatedAt { get; private init; }
     public DateTime? UpdatedAt { get; private set; }
 
+    public Trainer? Trainer { get; private set; }
+
 
     public static Result<Person> Create(
         Id gymId,

@@ -15,6 +15,16 @@ public static class ServiceErrors
             "The requested resource was not found.");
     }
 
+    public static class Trainer
+    {
+        public static class Person
+        {
+            public static readonly Error AlreadyAssociatedWithTrainer = new(
+                "Trainer.Person.AlreadyAssociatedWithTrainer",
+                "The person is already associated with a trainer.");
+        }
+    }
+
     public static class User
     {
         public static class Person
