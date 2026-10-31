@@ -127,6 +127,33 @@ public static class DomainErrors
             }
         }
 
+        public static class Trainer
+        {
+            public static class HireDate
+            {
+                public static readonly Error Required = new(
+                    "Trainer.HireDate.Required",
+                    "Hire date is required.");
+
+                public static readonly Error InTheFuture = new(
+                    "Trainer.HireDate.InTheFuture",
+                    "Hire date cannot be in the future.");
+            }
+
+            public static class Specialization
+            {
+                public static readonly Error TooLong = new(
+                    "Trainer.Specialization.TooLong",
+                    $"Specialization cannot be longer than {Domain.Entities.Trainer.Constants.SpecializationMaxLength} characters.");
+            }
+
+            public static class Notes
+            {
+                public static readonly Error TooLong = new(
+                    "Trainer.Notes.TooLong",
+                    $"Notes cannot be longer than {Domain.Entities.Trainer.Constants.NotesMaxLength} characters.");
+            }
+        }
 
         public static class User
         {
