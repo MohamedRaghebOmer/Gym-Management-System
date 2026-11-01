@@ -55,6 +55,13 @@ public static class DomainErrors
                 "DateOfBirth.TooOld",
                 $"Date of birth cannot be more than {Domain.ValueObjects.DateOfBirth.MaxAge} years ago.");
         }
+
+        public static class Money
+        {
+            public static readonly Error LessThanOrEqualToZero = new(
+                "Money.LessThanOrEqualToZero",
+                "Money value must be greater than zero.");
+        }
     }
 
     public static class Entities
@@ -187,6 +194,34 @@ public static class DomainErrors
                 public static readonly Error TooLong = new(
                     "Member.Notes.TooLong",
                     $"Notes cannot be longer than {Domain.Entities.Member.Constants.NotesMaxLength} characters.");
+            }
+        }
+
+        public static class MembershipPlan
+        {
+            public static class Name
+            {
+                public static readonly Error Empty = new(
+                    "MembershipPlan.Name.Empty",
+                    "Membership plan name cannot be empty.");
+
+                public static readonly Error TooLong = new(
+                    "MembershipPlan.Name.TooLong",
+                    $"Membership plan name cannot be longer than {Domain.Entities.MembershipPlan.Constants.NameMaxLength} characters.");
+            }
+
+            public static class DurationInDays
+            {
+                public static readonly Error LessThanOrEqualToZero = new(
+                    "MembershipPlan.DurationInDays.LessThanOrEqualToZero",
+                    "Membership plan duration must be greater than zero.");
+            }
+
+            public static class Description
+            {
+                public static readonly Error TooLong = new(
+                    "MembershipPlan.Description.TooLong",
+                    $"Membership plan description cannot be longer than {Domain.Entities.MembershipPlan.Constants.DescriptionMaxLength} characters.");
             }
         }
 

@@ -11,6 +11,7 @@ public sealed class GymDbContext(
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Gym> Gyms => Set<Gym>();
+    public DbSet<MembershipPlan> MembershipPlans => Set<MembershipPlan>();
     public DbSet<Trainer> Trainers => Set<Trainer>();
     public DbSet<Member> Members => Set<Member>();
 
