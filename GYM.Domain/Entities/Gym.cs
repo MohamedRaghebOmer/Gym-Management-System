@@ -24,6 +24,9 @@ public sealed class Gym : Entity
     public DateTime CreatedAt { get; private init; }
     public DateTime? UpdatedAt { get; private set; }
 
+    public ICollection<Person> People { get; } = [];
+    public ICollection<MembershipPlan> MembershipPlans { get; } = [];
+
     public static Result<Gym> Create(string name)
     {
         name = name.Trim();

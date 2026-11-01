@@ -403,6 +403,8 @@ Only add constraints that represent the requested domain/database rules or estab
 
 Do not invent database rules that are not supported by the feature requirements or existing architecture.
 
+If there is a required navigation properties to be written in another entities other than the current one do it.
+
 ## 2. Repository
 
 Create:

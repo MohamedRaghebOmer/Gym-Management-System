@@ -42,6 +42,16 @@ public static class ServiceErrors
         }
     }
 
+    public static class MembershipPlan
+    {
+        public static class Name
+        {
+            public static readonly Error AlreadyExists = new(
+                "MembershipPlan.Name.AlreadyExists",
+                "Membership plan name already exists.");
+        }
+    }
+
     public static class User
     {
         public static class Person
