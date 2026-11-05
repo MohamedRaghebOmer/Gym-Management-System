@@ -39,4 +39,18 @@ internal sealed class SubscriptionRepository : Repository<Subscription>, ISubscr
 
         return query.AnyAsync(cancellationToken);
     }
+
+    public Task<bool> HasActiveSubscriptionAtAsync(
+        Id memberId,
+        DateOnly date,
+        CancellationToken cancellationToken = default)
+    {
+        return _dbContext.Set<Subscription>()
+            .AnyAsync(
+                s => s.MemberId == memberId
+                    && s.Status == SubscriptionStatus.Active
+                    && s.StartDate <= date
+                    && s.EndDate >= date,
+                cancellationToken);
+    }
 }

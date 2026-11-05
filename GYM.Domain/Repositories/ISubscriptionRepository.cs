@@ -12,4 +12,9 @@ public interface ISubscriptionRepository : IRepository<Subscription>
         DateOnly endDate,
         Id? excludedSubscriptionId = null,
         CancellationToken cancellationToken = default);
+
+    Task<bool> HasActiveSubscriptionAtAsync(
+        Id memberId,
+        DateOnly date,
+        CancellationToken cancellationToken = default);
 }
