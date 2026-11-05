@@ -18,7 +18,7 @@ internal sealed class TrainerRepository : Repository<Trainer>, ITrainerRepositor
     }
 
     public Task<Trainer?> GetByPersonIdAsync(
-        Id personId, 
+        Id personId,
         CancellationToken cancellationToken = default)
     {
         return _dbContext.Set<Trainer>()

@@ -14,6 +14,7 @@ public sealed class GymDbContext(
     public DbSet<MembershipPlan> MembershipPlans => Set<MembershipPlan>();
     public DbSet<Trainer> Trainers => Set<Trainer>();
     public DbSet<Member> Members => Set<Member>();
+    public DbSet<Subscription> Subscriptions => Set<Subscription>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

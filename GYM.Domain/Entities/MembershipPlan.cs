@@ -41,6 +41,7 @@ public sealed class MembershipPlan : Entity
     public DateTime? UpdatedAt { get; private set; }
 
     public Gym? Gym { get; private set; }
+    public ICollection<Subscription> Subscriptions { get; private set; } = [];
 
     public static Result<MembershipPlan> Create(
         Id gymId,
@@ -99,7 +100,7 @@ public sealed class MembershipPlan : Entity
         if (durationInDays <= 0)
             errors.Add(DomainErrors.Entities.MembershipPlan.DurationInDays.LessThanOrEqualToZero);
 
-        if (!string.IsNullOrWhiteSpace(description) 
+        if (!string.IsNullOrWhiteSpace(description)
             && description.Length > Constants.DescriptionMaxLength)
             errors.Add(DomainErrors.Entities.MembershipPlan.Description.TooLong);
 
