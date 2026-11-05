@@ -26,6 +26,7 @@ public sealed class Gym : Entity
 
     public ICollection<Person> People { get; } = [];
     public ICollection<MembershipPlan> MembershipPlans { get; } = [];
+    public ICollection<Exercise> Exercises { get; } = [];
 
     public static Result<Gym> Create(string name)
     {

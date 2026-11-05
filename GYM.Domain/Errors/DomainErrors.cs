@@ -225,6 +225,56 @@ public static class DomainErrors
             }
         }
 
+        public static class Exercise
+        {
+            public static class Name
+            {
+                public static readonly Error Empty = new(
+                    "Exercise.Name.Empty",
+                    "Exercise name cannot be empty.");
+
+                public static readonly Error TooLong = new(
+                    "Exercise.Name.TooLong",
+                    $"Exercise name cannot be longer than {Domain.Entities.Exercise.Constants.NameMaxLength} characters.");
+            }
+
+            public static class MuscleGroup
+            {
+                public static readonly Error Empty = new(
+                    "Exercise.MuscleGroup.Empty",
+                    "Exercise muscle group cannot be empty.");
+
+                public static readonly Error TooLong = new(
+                    "Exercise.MuscleGroup.TooLong",
+                    $"Exercise muscle group cannot be longer than {Domain.Entities.Exercise.Constants.MuscleGroupMaxLength} characters.");
+            }
+
+            public static class Description
+            {
+                public static readonly Error TooLong = new(
+                    "Exercise.Description.TooLong",
+                    $"Exercise description cannot be longer than {Domain.Entities.Exercise.Constants.DescriptionMaxLength} characters.");
+            }
+
+            public static class Instructions
+            {
+                public static readonly Error TooLong = new(
+                    "Exercise.Instructions.TooLong",
+                    $"Exercise instructions cannot be longer than {Domain.Entities.Exercise.Constants.InstructionsMaxLength} characters.");
+            }
+
+            public static class VideoUrl
+            {
+                public static readonly Error TooLong = new(
+                    "Exercise.VideoUrl.TooLong",
+                    $"Exercise video url cannot be longer than {Domain.Entities.Exercise.Constants.VideoUrlMaxLength} characters.");
+
+                public static readonly Error InvalidFormat = new(
+                    "Exercise.VideoUrl.InvalidFormat",
+                    "Exercise video url must be a valid absolute HTTP or HTTPS URL.");
+            }
+        }
+
         public static class Subscription
         {
             public static class StartDate

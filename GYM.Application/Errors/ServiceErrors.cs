@@ -62,6 +62,16 @@ public static class ServiceErrors
         }
     }
 
+    public static class Exercise
+    {
+        public static class Name
+        {
+            public static readonly Error AlreadyExists = new(
+                "Exercise.Name.AlreadyExists",
+                "Exercise name already exists.");
+        }
+    }
+
     public static class Attendance
     {
         public static class Member
