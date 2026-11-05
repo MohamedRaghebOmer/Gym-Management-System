@@ -225,6 +225,27 @@ public static class DomainErrors
             }
         }
 
+        public static class Subscription
+        {
+            public static class StartDate
+            {
+                public static readonly Error Required = new(
+                    "Subscription.StartDate.Required",
+                    "Subscription start date is required.");
+            }
+
+            public static class EndDate
+            {
+                public static readonly Error Required = new(
+                    "Subscription.EndDate.Required",
+                    "Subscription end date is required.");
+
+                public static readonly Error MustBeGreaterThanStartDate = new(
+                    "Subscription.EndDate.MustBeGreaterThanStartDate",
+                    "Subscription end date must be greater than start date.");
+            }
+        }
+
         public static class User
         {
             public static class Username

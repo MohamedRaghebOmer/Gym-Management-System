@@ -52,6 +52,16 @@ public static class ServiceErrors
         }
     }
 
+    public static class Subscription
+    {
+        public static class Member
+        {
+            public static readonly Error OverlappingActiveSubscription = new(
+                "Subscription.Member.OverlappingActiveSubscription",
+                "The member already has an overlapping active subscription.");
+        }
+    }
+
     public static class User
     {
         public static class Person
