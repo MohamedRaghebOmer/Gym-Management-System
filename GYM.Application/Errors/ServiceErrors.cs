@@ -62,6 +62,20 @@ public static class ServiceErrors
         }
     }
 
+    public static class Attendance
+    {
+        public static class Member
+        {
+            public static readonly Error NoActiveSubscription = new(
+                "Attendance.Member.NoActiveSubscription",
+                "The member must have an active subscription to check in.");
+
+            public static readonly Error OpenAttendanceAlreadyExists = new(
+                "Attendance.Member.OpenAttendanceAlreadyExists",
+                "The member already has an open attendance record.");
+        }
+    }
+
     public static class User
     {
         public static class Person

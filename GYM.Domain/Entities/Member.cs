@@ -47,6 +47,7 @@ public sealed class Member : Entity
     public Person? Person { get; private set; }
     public Trainer? Trainer { get; private set; }
     public ICollection<Subscription> Subscriptions { get; private set; } = [];
+    public ICollection<Attendance> Attendances { get; private set; } = [];
 
     public static Result<Member> Create(
         Id personId,

@@ -270,6 +270,23 @@ public static class DomainErrors
             }
         }
 
+        public static class Attendance
+        {
+            public static class CheckIn
+            {
+                public static readonly Error Required = new(
+                    "Attendance.CheckIn.Required",
+                    "Check-in time is required.");
+            }
+
+            public static class CheckOut
+            {
+                public static readonly Error MustBeGreaterThanCheckIn = new(
+                    "Attendance.CheckOut.MustBeGreaterThanCheckIn",
+                    "Check-out time must be greater than check-in time.");
+            }
+        }
+
         public static class User
         {
             public static class Username
