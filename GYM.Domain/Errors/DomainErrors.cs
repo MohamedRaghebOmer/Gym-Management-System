@@ -246,6 +246,30 @@ public static class DomainErrors
             }
         }
 
+        public static class Payment
+        {
+            public static class PaymentMethod
+            {
+                public static readonly Error Invalid = new(
+                    "Payment.PaymentMethod.Invalid",
+                    "Payment method is invalid.");
+            }
+
+            public static class PaymentDate
+            {
+                public static readonly Error Required = new(
+                    "Payment.PaymentDate.Required",
+                    "Payment date is required.");
+            }
+
+            public static class Notes
+            {
+                public static readonly Error TooLong = new(
+                    "Payment.Notes.TooLong",
+                    $"Payment notes cannot be longer than {Domain.Entities.Payment.Constants.NotesMaxLength} characters.");
+            }
+        }
+
         public static class User
         {
             public static class Username
