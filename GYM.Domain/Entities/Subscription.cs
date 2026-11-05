@@ -37,6 +37,7 @@ public sealed class Subscription : Entity
 
     public Member? Member { get; private set; }
     public MembershipPlan? MembershipPlan { get; private set; }
+    public ICollection<Payment> Payments { get; private set; } = [];
 
     public static Result<Subscription> Create(
         Id memberId,
