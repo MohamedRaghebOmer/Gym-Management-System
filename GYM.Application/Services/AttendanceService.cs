@@ -1,7 +1,7 @@
 using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Attendance;
 using GYM.Application.Errors;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
@@ -101,7 +101,7 @@ public sealed class AttendanceService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while creating an attendance record.");
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -158,7 +158,7 @@ public sealed class AttendanceService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while updating attendance record {AttendanceId}.", attendanceId);
-            return Result.Failure(ServiceErrors.Common.UnExcepected);
+            return Result.Failure(ServiceErrors.Common.Unexpected);
         }
     }
 }

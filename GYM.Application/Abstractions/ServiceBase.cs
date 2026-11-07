@@ -69,7 +69,7 @@ public abstract class ServiceBase<TEntity, TResponseDto, TCreateDto, TUpdateDto>
                 id);
 
             return Result.Failure<TResponseDto>(
-                ServiceErrors.Common.UnExcepected);
+                ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -91,7 +91,7 @@ public abstract class ServiceBase<TEntity, TResponseDto, TCreateDto, TUpdateDto>
                 "An unexpected error occurred while retrieving all entities of type {EntityType}.",
                 typeof(TEntity).Name);
 
-            return Result.Failure<List<TResponseDto>>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<List<TResponseDto>>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -123,7 +123,7 @@ public abstract class ServiceBase<TEntity, TResponseDto, TCreateDto, TUpdateDto>
             Console.WriteLine(e);
             _logger.LogError(e, "An unexpected error occurred while checking the existence of an entity of type {EntityType} with ID {Id}.", typeof(TEntity).Name, id);
 
-            return Result.Failure<bool>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<bool>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -166,7 +166,7 @@ public abstract class ServiceBase<TEntity, TResponseDto, TCreateDto, TUpdateDto>
             Console.WriteLine(e);
             _logger.LogError(e, "An unexpected error occurred while deleting an entity of type {EntityType} with ID {Id}.", typeof(TEntity).Name, id);
 
-            return Result.Failure<bool>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<bool>(ServiceErrors.Common.Unexpected);
         }
     }
 

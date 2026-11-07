@@ -1,7 +1,7 @@
 using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Gym;
 using GYM.Application.Errors;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
@@ -62,7 +62,7 @@ public sealed class GymService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while creating a gym.");
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -115,7 +115,7 @@ public sealed class GymService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while updating gym {GymId}.", gymId);
-            return Result.Failure(ServiceErrors.Common.UnExcepected);
+            return Result.Failure(ServiceErrors.Common.Unexpected);
         }
     }
 }

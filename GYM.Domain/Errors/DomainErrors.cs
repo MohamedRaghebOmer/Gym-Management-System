@@ -365,5 +365,39 @@ public static class DomainErrors
                     $"Password cannot be longer than {Domain.Entities.User.Constants.PasswordHashMaxLength} characters.");
             }
         }
+
+        public static class WorkoutPlan
+        {
+            public static class Name
+            {
+                public static readonly Error Required = new(
+                    "WorkoutPlan.Name.Required",
+                    "Workout plan name is required.");
+                public static readonly Error TooLong = new(
+                    "WorkoutPlan.Name.TooLong",
+                    $"Workout plan name cannot be longer than {Domain.Entities.WorkoutPlan.Constants.NameMaxLength} characters.");
+            }
+            public static class Description
+            {
+                public static readonly Error TooLong = new(
+                    "WorkoutPlan.Description.TooLong",
+                    $"Workout plan description cannot be longer than {Domain.Entities.WorkoutPlan.Constants.DescriptionMaxLength} characters.");
+            }
+
+            public static class StartDate
+            {
+                public static readonly Error Required = new(
+                    "WorkoutPlan.StartDate.Required",
+                    "Workout plan start date is required.");
+            }
+
+
+            public static class EndDate
+            {
+                public static readonly Error BeforeStartDate = new(
+                    "WorkoutPlan.EndDate.BeforeStartDate",
+                    "Workout plan end date must be after start date.");
+            }
+        }
     }
 }

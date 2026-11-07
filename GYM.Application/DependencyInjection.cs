@@ -1,5 +1,5 @@
-﻿using GYM.Application.Abstractions.ServicesInterfaces;
-using GYM.Application.Services;
+﻿using GYM.Application.Services;
+using GYM.Application.ServicesInterfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GYM.Application;
@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IGymService, GymService>();
+        services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 
         return services;
     }

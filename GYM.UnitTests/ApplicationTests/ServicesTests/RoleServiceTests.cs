@@ -1,7 +1,7 @@
 using FluentAssertions;
 using GYM.Application;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Role;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
 using GYM.Domain.Shared;

@@ -1,7 +1,7 @@
 using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Subscription;
 using GYM.Application.Errors;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
 using GYM.Domain.Enums;
@@ -117,7 +117,7 @@ public sealed class SubscriptionService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while creating a subscription.");
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -175,7 +175,7 @@ public sealed class SubscriptionService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while updating subscription {SubscriptionId}.", subscriptionId);
-            return Result.Failure(ServiceErrors.Common.UnExcepected);
+            return Result.Failure(ServiceErrors.Common.Unexpected);
         }
     }
 }
