@@ -1,7 +1,7 @@
 using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Trainer;
 using GYM.Application.Errors;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
@@ -90,7 +90,7 @@ public sealed class TrainerService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while creating a trainer.");
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -123,7 +123,7 @@ public sealed class TrainerService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while updating trainer {TrainerId}.", trainerId);
-            return Result.Failure(ServiceErrors.Common.UnExcepected);
+            return Result.Failure(ServiceErrors.Common.Unexpected);
         }
     }
 }

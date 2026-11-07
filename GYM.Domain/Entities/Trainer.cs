@@ -39,6 +39,7 @@ public sealed class Trainer : Entity
 
     public Person? Person { get; private set; }
     public ICollection<Member> Members { get; private set; } = [];
+    public ICollection<WorkoutPlan> WorkoutPlans { get; private set; } = [];
 
     public static Result<Trainer> Create(
         Id personId,

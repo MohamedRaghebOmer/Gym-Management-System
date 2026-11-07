@@ -114,7 +114,7 @@ public sealed class ServiceBaseTests
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Should().Be(ServiceErrors.Common.UnExcepected);
+        result.Error.Should().Be(ServiceErrors.Common.Unexpected);
     }
 
     [Fact]
@@ -178,7 +178,7 @@ public sealed class ServiceBaseTests
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Should().Be(ServiceErrors.Common.UnExcepected);
+        result.Error.Should().Be(ServiceErrors.Common.Unexpected);
     }
 
     [Theory]
@@ -241,7 +241,7 @@ public sealed class ServiceBaseTests
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Should().Be(ServiceErrors.Common.UnExcepected);
+        result.Error.Should().Be(ServiceErrors.Common.Unexpected);
     }
 
     [Theory]
@@ -334,7 +334,7 @@ public sealed class ServiceBaseTests
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Should().Be(ServiceErrors.Common.UnExcepected);
+        result.Error.Should().Be(ServiceErrors.Common.Unexpected);
 
         _unitOfWorkMock.Verify(
             unitOfWork => unitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()),
@@ -360,7 +360,7 @@ public sealed class ServiceBaseTests
 
         // Assert
         result.IsFailure.Should().BeTrue();
-        result.Error.Should().Be(ServiceErrors.Common.UnExcepected);
+        result.Error.Should().Be(ServiceErrors.Common.Unexpected);
 
         _unitOfWorkMock.Verify(
             unitOfWork => unitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()),
@@ -379,13 +379,13 @@ public sealed class ServiceBaseTests
         public override Task<Result<int>> CreateAsync(
             TestCreateDto dto,
             CancellationToken cancellationToken = default)
-            => Task.FromResult(Result.Failure<int>(ServiceErrors.Common.UnExcepected));
+            => Task.FromResult(Result.Failure<int>(ServiceErrors.Common.Unexpected));
 
         public override Task<Result> UpdateAsync(
             int id,
             TestUpdateDto dto,
             CancellationToken cancellationToken = default)
-            => Task.FromResult(Result.Failure(ServiceErrors.Common.UnExcepected));
+            => Task.FromResult(Result.Failure(ServiceErrors.Common.Unexpected));
     }
 
     public sealed class TestEntity(string name) : Entity

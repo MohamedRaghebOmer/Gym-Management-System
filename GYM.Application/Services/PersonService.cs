@@ -1,7 +1,7 @@
 ﻿using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Person;
 using GYM.Application.Errors;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
@@ -130,7 +130,7 @@ public sealed class PersonService
             Console.WriteLine(e);
             _logger.LogError(e, "An error occurred while creating a Person");
 
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -239,7 +239,7 @@ public sealed class PersonService
             Console.WriteLine(e);
             _logger.LogError(e, "An error occurred while updating a Person");
 
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 }

@@ -1,7 +1,7 @@
 using GYM.Application.Abstractions;
-using GYM.Application.Abstractions.ServicesInterfaces;
 using GYM.Application.DTOs.Exercise;
 using GYM.Application.Errors;
+using GYM.Application.ServicesInterfaces;
 using GYM.Domain.Abstractions;
 using GYM.Domain.Entities;
 using GYM.Domain.Repositories;
@@ -90,7 +90,7 @@ public sealed class ExerciseService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while creating an exercise.");
-            return Result.Failure<int>(ServiceErrors.Common.UnExcepected);
+            return Result.Failure<int>(ServiceErrors.Common.Unexpected);
         }
     }
 
@@ -137,7 +137,7 @@ public sealed class ExerciseService :
         catch (Exception ex)
         {
             _logger.LogError(ex, "An unexpected error occurred while updating exercise {ExerciseId}.", exerciseId);
-            return Result.Failure(ServiceErrors.Common.UnExcepected);
+            return Result.Failure(ServiceErrors.Common.Unexpected);
         }
     }
 }

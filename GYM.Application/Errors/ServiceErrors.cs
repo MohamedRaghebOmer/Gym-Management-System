@@ -6,7 +6,7 @@ public static class ServiceErrors
 {
     public static class Common
     {
-        public static readonly Error UnExcepected = new(
+        public static readonly Error Unexpected = new(
             "Common.Unexpected",
             "An unexpected error occurred.");
 
