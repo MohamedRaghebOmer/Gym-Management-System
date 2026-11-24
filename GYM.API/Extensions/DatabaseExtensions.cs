@@ -1,5 +1,6 @@
 ﻿using GYM.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace GYM.API.Extensions;
 
@@ -13,6 +14,9 @@ internal static class DatabaseExtensions
         {
             options.UseNpgsql(
                 configuration.GetConnectionString("DefaultConnection"));
+
+            options.ConfigureWarnings(w =>
+                w.Ignore(RelationalEventId.MigrationsNotFound));
 
             options.AddInterceptors(new LoggingInterceptor());
         });
