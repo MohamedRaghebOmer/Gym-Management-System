@@ -37,6 +37,7 @@ public sealed class User : Entity
     // Navigation properties (optional)
     public Person? Person { get; private set; }
     public Domain.Entities.Role? Role { get; private set; }
+    public ICollection<RefreshToken> RefreshTokens { get; private set; } = [];
 
     public static Result<User> Create(
         Id personId,

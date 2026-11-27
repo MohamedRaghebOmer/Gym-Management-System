@@ -437,5 +437,30 @@ public static class DomainErrors
                     $"Notes cannot be longer than {Domain.Entities.WorkoutPlanExercise.Constants.NotesMaxLength} characters.");
             }
         }
+
+        public static class RefreshToken
+        {
+            public static readonly Error AlreadyRevoked = new(
+                "RefreshToken.AlreadyRevoked",
+                "The refresh token has already been revoked.");
+
+            public static class Token
+            {
+                public static readonly Error Empty = new(
+                    "RefreshToken.Token.Empty",
+                    "Refresh token cannot be empty.");
+
+                public static readonly Error TooLong = new(
+                    "RefreshToken.Token.TooLong",
+                    $"Refresh token cannot be longer than {Domain.Entities.RefreshToken.Constants.TokenMaxLength} characters.");
+            }
+
+            public static class ExpiresAt
+            {
+                public static readonly Error Required = new(
+                    "RefreshToken.ExpiresAt.Required",
+                    "Refresh token expiration date is required.");
+            }
+        }
     }
 }
