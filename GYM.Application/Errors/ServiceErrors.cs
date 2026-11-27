@@ -109,4 +109,11 @@ public static class ServiceErrors
             "WorkoutPlanExercise.AlreadyExists",
             "This exercise is already added to the workout plan.");
     }
+
+    public static class RefreshToken
+    {
+        public static readonly Error Duplicate = new(
+            "RefreshToken.Duplicate",
+            "A refresh token with the same value already exists.");
+    }
 }
