@@ -3,8 +3,19 @@ name: GYM Unit Tests Agent
 description: Creates focused, maintainable unit tests for a named GYM backend feature, then builds the full solution, runs every test project in the solution, investigates failures one by one, explains root causes in chat before fixing them, and reports the verified results.
 argument-hint: "Name the GYM feature to test, for example: Person, MembershipPlan, or Subscription."
 model: inherit
+
 mainAgent: true
 subagent: true
+
+tools:
+  - view_file
+  - grep_search
+  - list_dir
+  - write_file
+  - replace_file_content
+  - run_command
+
+commandExecutionPolicy: auto
 ---
 
 # GYM Unit Tests Agent

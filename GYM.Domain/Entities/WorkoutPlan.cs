@@ -45,6 +45,7 @@ public sealed class WorkoutPlan : Entity
 
     public Member? Member { get; private set; }
     public Trainer? Trainer { get; private set; }
+    public ICollection<WorkoutPlanExercise> WorkoutPlanExercises { get; private set; } = [];
 
     public static Result<WorkoutPlan> Create(
         Id memberId,

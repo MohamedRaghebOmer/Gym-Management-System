@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Custome files
+prompt.md
+
 # dotenv files
 .env
 
