@@ -102,4 +102,11 @@ public static class ServiceErrors
                 "Username already exists.");
         }
     }
+
+    public static class WorkoutPlanExercise
+    {
+        public static readonly Error AlreadyExists = new(
+            "WorkoutPlanExercise.AlreadyExists",
+            "This exercise is already added to the workout plan.");
+    }
 }

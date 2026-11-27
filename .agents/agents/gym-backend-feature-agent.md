@@ -1,9 +1,21 @@
 ---
 name: GYM Backend Feature Agent
 description: Implement a complete backend feature across GYM.Domain, GYM.Infrastructure, and GYM.Application while strictly following the repository's existing patterns. Never modify GYM.API.
+
 model: inherit
+
 mainAgent: true
 subagent: true
+
+tools:
+  - view_file
+  - grep_search
+  - list_dir
+  - write_file
+  - replace_file_content
+  - run_command
+
+commandExecutionPolicy: auto
 ---
 
 # GYM Backend Feature Agent

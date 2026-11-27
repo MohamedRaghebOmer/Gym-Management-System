@@ -399,5 +399,43 @@ public static class DomainErrors
                     "Workout plan end date must be after start date.");
             }
         }
+
+        public static class WorkoutPlanExercise
+        {
+            public static class Sets
+            {
+                public static readonly Error LessThanOrEqualToZero = new(
+                    "WorkoutPlanExercise.Sets.LessThanOrEqualToZero",
+                    "Sets must be greater than zero.");
+            }
+
+            public static class Reps
+            {
+                public static readonly Error LessThanOrEqualToZero = new(
+                    "WorkoutPlanExercise.Reps.LessThanOrEqualToZero",
+                    "Reps must be greater than zero.");
+            }
+
+            public static class Weight
+            {
+                public static readonly Error Negative = new(
+                    "WorkoutPlanExercise.Weight.Negative",
+                    "Weight cannot be negative.");
+            }
+
+            public static class RestSeconds
+            {
+                public static readonly Error Negative = new(
+                    "WorkoutPlanExercise.RestSeconds.Negative",
+                    "Rest seconds cannot be negative.");
+            }
+
+            public static class Notes
+            {
+                public static readonly Error TooLong = new(
+                    "WorkoutPlanExercise.Notes.TooLong",
+                    $"Notes cannot be longer than {Domain.Entities.WorkoutPlanExercise.Constants.NotesMaxLength} characters.");
+            }
+        }
     }
 }

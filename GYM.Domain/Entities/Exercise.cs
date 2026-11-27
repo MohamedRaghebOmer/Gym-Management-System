@@ -47,6 +47,7 @@ public sealed class Exercise : Entity
     public DateTime? UpdatedAt { get; private set; }
 
     public Gym? Gym { get; private set; }
+    public ICollection<WorkoutPlanExercise> WorkoutPlanExercises { get; private set; } = [];
 
     public static Result<Exercise> Create(
         Id gymId,
